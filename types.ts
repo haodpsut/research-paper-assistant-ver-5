@@ -1,0 +1,61 @@
+
+export interface Paper {
+  paperId: string;
+  title: string;
+  authors: { name: string }[];
+  year: number | null;
+  abstract: string | null;
+  url: string | null;
+  venue: string | null;
+  citationCount: number | null;
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'user' | 'ai';
+  text: string;
+  timestamp: Date;
+}
+
+export enum ApiProvider {
+  GEMINI = 'Gemini',
+  OPENROUTER = 'OpenRouter',
+}
+
+export type ApiKeyName = 'semanticScholar' | 'gemini' | 'openRouter';
+
+export interface ApiKeys {
+  semanticScholar: string;
+  gemini: string;
+  openRouter: string;
+}
+
+export interface GroundingChunk {
+  web?: {
+    uri: string;
+    title: string;
+  };
+  retrievedContext?: {
+    uri: string;
+    title: string;
+  };
+  // Add other possible types if necessary
+}
+
+export interface SemanticScholarSearchResponse {
+  papers: Paper[];
+  total: number;
+  offset: number; // The offset that was used for this request
+}
+
+export type UploadedFileStatus = "pending" | "reading" | "ready" | "error" | "unsupported_type";
+
+export interface UploadedFile {
+  id: string;
+  file: File;
+  status: UploadedFileStatus;
+  extractedText?: string;       // For .txt files
+  base64Data?: string;        // For images (data URL)
+  mimeType?: string;          // For images
+  errorMessage?: string;
+}
